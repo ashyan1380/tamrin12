@@ -15,5 +15,5 @@ export const logout = () => {
    */
 
   localStorage.clear();
-  window.location.reload();
+  // window.location.reload();
 };

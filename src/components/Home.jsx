@@ -39,6 +39,7 @@ import { logout } from "../utils/auth";
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import { ProtectedRoute } from "../ProtectedRoute";
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const drawerWidth = 240;
 
@@ -124,10 +125,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 // console.log(mainListItems);
-export default function Dashboard() {
+export default function Home() {
   const rowsNames = useSelector(state => state.rowsNames);
   const [session3, setSession3] = useState(true);
-  const [rowjlssldf, setrowjlssldf] = useState([]);
   const [section, setSection] = React.useState(1);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -159,11 +159,12 @@ export default function Dashboard() {
           >
             <MenuIcon />
             </IconButton>
-            <Link to="/">            
+            <Link to="/setting">            
             <Button variant="contained" color="primary" onClick={logout}>
-              <HomeIcon/>
+              <SettingsIcon/> &nbsp; مدیریت
             </Button>
             </Link>
+            <tb>   </tb>
           <Typography
             component="h1"
             variant="h6"
@@ -171,7 +172,7 @@ export default function Dashboard() {
             noWrap
             className={classes.title}
           >
-            پنل مدیریت فروشگاه فلان
+            &emsp; فروشگاه اینترنتی
           </Typography>
         </Toolbar>
       </AppBar>
@@ -231,17 +232,9 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              {section===1 && <Paper className={classes.paper}>
-                <NameKala rowjlssldf={rowjlssldf}/>
-                  </Paper>}
-              {section===2 && <Paper className={classes.paper}>
-                    <PriceAndNumber/>
-                </Paper>}
-                {section===3 && <div className={classes.paper}>
-                { session3 ? <Paper className={classes.paper}><UsersNotOrder/></Paper> :  
-                <Paper className={classes.paper}><UsersOrder/></Paper>
-                 }              
-                </div>}
+              <Paper className={classes.paper}>
+                سایت فروشگاهی
+              </Paper>
             </Grid>
           </Grid>   
         </Container>

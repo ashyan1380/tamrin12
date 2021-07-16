@@ -20,11 +20,11 @@ import TableHead from '@material-ui/core/TableHead';
 import { createStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {useSelector , useDispatch} from 'react-redux';
-import {fetchProd ,deletProd ,editProd} from '../Stor/Action/index'
+import {fetchProd , deletProd} from '../Stor/Action/index'
 import {Provider} from 'react-redux';
 import {getNames} from '../api/getPro';
 import {deleteProdoct} from '../api/deletProd';
-import {update} from '../api/putProdoct';
+import {update} from '../api/patchProdoct';
 import {add} from '../api/postProd';
 
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -115,6 +115,8 @@ const useStyles = makeStyles((theme) => ({
 // -------------------------------------------------------------------------
 export default function NameKala() {
     const rows = useSelector(state => state.rowsNames);
+    // const rows = []
+    // console.log(rows);
     const dispatch = useDispatch();
     useEffect(() => {
       getNames ()
@@ -140,12 +142,7 @@ export default function NameKala() {
         setOpen(true);
         setSelected(rw);
     }
-  function rand() {
-    return Math.round(Math.random() * 20) - 10;
-  }
   function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
     return {
       top: "50%",
       left: "50%",
@@ -157,7 +154,7 @@ export default function NameKala() {
     setPage(0);
   };
   const handleEditSubmit = () => {
-      dispatch(deletProd(selected.id));
+      // dispatch(deletProd(selected.id));
       let prodoct = {
           "id":selected.id,
           "productName":nameProd, 
@@ -170,7 +167,10 @@ export default function NameKala() {
         }else{  // for add section
           add(prodoct);
         }
-        dispatch(editProd(prodoct));
+        getNames ()
+        .then ((data)=> {dispatch(fetchProd(data))})
+        .catch(err=> {return err})
+        // dispatch(editProd(prodoct));
     setOpen(false);
 }
   const [nameProd, setNameProd] = useState();
@@ -199,15 +199,15 @@ export default function NameKala() {
     <TableContainer component={Paper}>
       <Button variant="contained" color="primary" onClick={() => handleEditAddBtn({id:(rows.length+1)})}>
        افزودن کالا
-      </Button><br></br>
+      </Button><br></br><br></br>
       <Table className={classes.table} aria-label="custom pagination table">
       <TableHead>
-          <TableRow style={{"background":"gray"}}>
-            <TableCell>شماره کالا</TableCell>
-            <TableCell>نام کالا</TableCell>
-            <TableCell>دسته بندی</TableCell>
-            <TableCell>تصویر</TableCell>
-            <TableCell>ویرایش/ حذف</TableCell>
+          <TableRow style={{"background":"#3f51b5"}}>
+            <TableCell style={{"color":"white"}}>شماره کالا</TableCell>
+            <TableCell style={{"color":"white"}}>نام کالا</TableCell>
+            <TableCell style={{"color":"white"}}>دسته بندی</TableCell>
+            <TableCell style={{"color":"white"}}>تصویر</TableCell>
+            <TableCell style={{"color":"white"}}>ویرایش/ حذف</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -230,11 +230,11 @@ export default function NameKala() {
               </TableCell>
               <TableCell>
               <Button variant="contained" color="primary">
-                  <button className="btn" onClick={()=> deleteRow(row)}>
-                    <DeleteIcon/>
+                  <button style={{"backgroundColor":"#3f51b5","border":"none"}}  className="btn" onClick={()=> deleteRow(row)}>
+                    <DeleteIcon style={{"color":"white"}} />
                   </button>
-                  <button className="btn" onClick={() => handleEditAddBtn(row)}>
-                    <EditIcon/>
+                  <button style={{"backgroundColor":"#3f51b5","border":"none"}} className="btn" onClick={() => handleEditAddBtn(row)}>
+                    <EditIcon style={{"color":"white"}}/>
                   </button>
               </Button>
               </TableCell>
@@ -267,6 +267,7 @@ export default function NameKala() {
         </TableFooter>
       </Table>
       <Modal
+            align="right"
             open={open}
             onClose={()=>setOpen(false)}
             aria-labelledby="simple-modal-title"
@@ -275,10 +276,11 @@ export default function NameKala() {
 
             <div style={getModalStyle()} className={classes.paper}>افزودن/ ویرایش کالا <br></br><br></br>
             <form  style={setdisplay()} className={classes.root} noValidate autoComplete="off">
-                <TextField style={setdisplay()} id="outlined-basic" label="نام کالا" variant="outlined" onChange={(e)=>setNameProd(e.target.value)}/>
+                <TextField style={setdisplay()} id="outlined-basic" label="نام کالا" variant="outlined"
+                 onChange={(e)=>setNameProd(e.target.value)} align="right"/>
                     <br></br>
                     <br></br>
-                    <FormControl className={classes.formControl} style={setdisplay()}>
+                    <FormControl align="right" className={classes.formControl} style={setdisplay()}>
                   <InputLabel shrink htmlFor="age-native-label-placeholder">
                     دسته ها
                   </InputLabel>

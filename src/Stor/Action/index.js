@@ -18,9 +18,27 @@ export const deletProd = (prodId)=>{
     }
 }
 
-export const editProd = (prodoct)=> {
-    return{
-        type:"EDIT",
-        payload:prodoct,
+export const getUser = (users)=>{
+    return {
+        type:"GET",
+        payload:users,
     }
 }
+export const deletUserHandle = (id) => {
+    return{
+        type:"DELETHANDLE",
+        payload:id,
+    }
+}
+// export const addProd = (prodoct)=> {
+//     return{
+//         type:"ADD",
+//         payload:prodoct,
+//     }
+// }
+// export const editProd = (prodoct)=>{
+//     return {
+//         type:"EDIT",
+//         payload:prodoct,
+//     }
+// } 
